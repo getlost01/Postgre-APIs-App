@@ -26,3 +26,8 @@ app.put('/api/posts/:id', posts.updatePost);
 app.delete('/api/posts/:id', posts.deletePost);
 app.post('/api/like/:id', posts.like);
 app.post('/api/dislike/:id', posts.dislike);
+
+// Comment APIs
+import comments from "./APIs/comments.js";
+app.post('/api/comment', comments.createComment);
+app.get('/api/comments/:id', comments.getComment);

@@ -32,7 +32,7 @@ CREATE TABLE comments(
    post_id INT,
    user_id INT,
    comment TEXT NOT NULL,
-   PRIMARY KEY(post_id),
+   PRIMARY KEY(comment_id),
    CONSTRAINT fk_posts
       FOREIGN KEY(post_id) 
 	  REFERENCES posts(post_id)

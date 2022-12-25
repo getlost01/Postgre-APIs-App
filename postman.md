@@ -15,4 +15,10 @@
    "keywords": ["PG", "Postgre"]
 }
 
-user_id,title,content,category,keyword
+<!-- Comment data testing -->
+{
+   "post_id": 1,
+   "user_id": 1,
+   "comment": "TEXT NOT NULL"
+}
+
