@@ -22,6 +22,7 @@ import posts from "./APIs/post.js";
 app.get('/api/posts', posts.showPosts);
 app.post('/api/posts', posts.createPost);
 app.get('/api/posts/:id', posts.postsById);
-app.delete('/api/posts/:id', posts.deletePostById);
+app.put('/api/posts/:id', posts.updatePost);
+app.delete('/api/posts/:id', posts.deletePost);
 app.post('/api/like/:id', posts.like);
 app.post('/api/dislike/:id', posts.dislike);

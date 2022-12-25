@@ -16,6 +16,21 @@ const createPost = (req, res) => {
     );
 };
 
+const updatePost= (req,res) => {
+    let id = parseInt(req.params.id)
+    const { title, content, category, keywords} = req.body;
+
+    pool.query('UPDATE posts SET title = $1 , content = $2 , category = $3 , keywords =$4 WHERE post_id=$5', 
+    [title, content, category, keywords, id], (err,result) =>{
+        
+        if(err){console.log(err);res.json({ msg: "Error encountered", error: err}); return;}
+
+        res.json({
+            msg: `Post id = ${id} have been updated🎉`
+        })
+    })
+}
+
 const showPosts = (req,res) => {
     pool.query('SELECT * FROM posts', (err,result) =>{
 
@@ -67,7 +82,7 @@ const dislike = (req,res) => {
     })
 }
 
-const deletePostById = (req,res) => {
+const deletePost = (req,res) => {
     const id = parseInt(req.params.id)
 
     pool.query('DELETE FROM posts WHERE post_id=$1',[id], (err,result) => {
@@ -80,5 +95,6 @@ const deletePostById = (req,res) => {
 }
 
 
-export default { createPost, showPosts, postsById, like, dislike, deletePostById}
+
+export default { createPost, showPosts, postsById, like, dislike, deletePost, updatePost}
 
