@@ -1,6 +1,5 @@
 import pool from '.././config/db.js';
 
-
 const createPost = (req, res) => {
     const { user_id, title, content, category, keywords} = req.body;
     console.log(req.body)
@@ -17,6 +16,69 @@ const createPost = (req, res) => {
     );
 };
 
+const showPosts = (req,res) => {
+    pool.query('SELECT * FROM posts', (err,result) =>{
 
-export default { createPost }
+        if(err){res.json({ msg: "Error encountered", error: err}); return;}
+        res.json({
+            posts : result.rows
+        })
+    })
+}
+
+const postsById = (req,res) => {
+
+    let id = parseInt(req.params.id)
+
+    pool.query('SELECT * FROM posts WHERE post_id=$1',[id], (err,result) =>{
+        
+        if(err){res.json({ msg: "Error encountered", error: err}); return;}
+        res.json({
+            post : result.rows[0]
+        })
+    })
+}
+
+const like = (req,res) => {
+
+    let id = parseInt(req.params.id)
+
+    pool.query('UPDATE posts SET likes = likes + 1 WHERE post_id=$1', [id], (err,result) =>{
+        
+        if(err){res.json({ msg: "Error encountered", error: err}); return;}
+
+        res.json({
+            msg: "👍 Done"
+        })
+    })
+}
+
+const dislike = (req,res) => {
+
+    let id = parseInt(req.params.id)
+
+    pool.query('UPDATE posts SET dislikes = dislikes + 1 WHERE post_id=$1', [id], (err,result) =>{
+        
+        if(err){res.json({ msg: "Error encountered", error: err}); return;}
+
+        res.json({
+            msg: "👎 Done"
+        })
+    })
+}
+
+const deletePostById = (req,res) => {
+    const id = parseInt(req.params.id)
+
+    pool.query('DELETE FROM posts WHERE post_id=$1',[id], (err,result) => {
+        if(err){res.json({ msg: "Error encountered", error: err}); return;}
+
+        res.json({
+            msg: `Post with post_id = ${id} has deleted successfully`
+        })
+    })
+}
+
+
+export default { createPost, showPosts, postsById, like, dislike, deletePostById}
 

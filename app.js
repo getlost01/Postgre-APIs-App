@@ -11,12 +11,17 @@ app.listen(process.env.PORT || 5008, function(){
 });
 
 // User APIs 
-import users from "./APIs/user.js"
+import users from "./APIs/user.js";
 app.post('/api/signup', users.signup);
 app.post('/api/login', users.login);
 app.get('/api/users/all', users.showUsers);
 app.get('/api/users/:id', users.userById);
 
-
-
-
+// Post APIs
+import posts from "./APIs/post.js";
+app.get('/api/posts', posts.showPosts);
+app.post('/api/posts', posts.createPost);
+app.get('/api/posts/:id', posts.postsById);
+app.delete('/api/posts/:id', posts.deletePostById);
+app.post('/api/like/:id', posts.like);
+app.post('/api/dislike/:id', posts.dislike);
