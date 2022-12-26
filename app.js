@@ -4,7 +4,7 @@ dotenv.config();
 
 const app = express();
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false })); 
 
 app.listen(process.env.PORT || 5008, function(){
     console.log("➡️ Postgre APIs App listening on port %d in %s mode 👍", this.address().port, app.settings.env);
@@ -30,4 +30,7 @@ app.post('/api/dislike/:id', posts.dislike);
 // Comment APIs
 import comments from "./APIs/comments.js";
 app.post('/api/comment', comments.createComment);
-app.get('/api/comments/:id', comments.getComment);
+app.get('/api/comment/:id', comments.getComment);
+app.get('/api/comment/all/:id', comments.getAllComments);
+app.put('/api/comment/:id', comments.updateComments);
+app.delete('/api/comment/:id', comments.deleteComment);
