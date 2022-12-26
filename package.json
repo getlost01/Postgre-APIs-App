@@ -1,5 +1,5 @@
 {
-    "name": "Postgre APIs App",
+    "name": "postgre_apis_app",
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
