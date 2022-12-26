@@ -34,3 +34,10 @@ app.get('/api/comment/:id', comments.getComment);
 app.get('/api/comment/all/:id', comments.getAllComments);
 app.put('/api/comment/:id', comments.updateComments);
 app.delete('/api/comment/:id', comments.deleteComment);
+
+app.get("*", (req, res) => { res.send(`{<br>
+    &nbsp;<strong>error</strong>: 404 ,<br>
+    &nbsp;<strong>msg</strong>:  Welcome to this app, please visit docs for more details regards these APIs ,<br>
+    &nbsp;<strong>docs</strong>: "<a href="https://documenter.getpostman.com/view/25076245/2s8Z6vaEwE">https://documenter.getpostman.com/view/25076245/2s8Z6vaEwE" <br>
+    }`) });
+

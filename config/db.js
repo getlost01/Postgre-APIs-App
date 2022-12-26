@@ -5,7 +5,7 @@ dotenv.config();
 
 // const pool = new Pool({
 //   user: "aagamjain",
-//   host: process.env.HOST,
+//   host: "localhost",
 //   database: "Postgre-APIs-App",
 //   password: process.env.PASSWORD,
 //   port: 5432

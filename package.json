@@ -1,7 +1,7 @@
 {
-    "name": "postgre_apis_app",
+    "name": "pg-v1-aagam",
     "version": "1.0.0",
-    "description": "",
+    "description": "This is the Postgre APIs user and feed management app designed by aagam.",
     "main": "index.js",
     "type": "module",
     "scripts": {
@@ -9,7 +9,7 @@
         "start": "node app.js"
     },
     "keywords": [],
-    "author": "",
+    "author": "Aaagam Jain",
     "license": "ISC",
     "dependencies": {
         "dotenv": "^16.0.2",
