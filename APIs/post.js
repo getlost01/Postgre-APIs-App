@@ -5,9 +5,9 @@ const createPost = (req, res) => {
     pool.query("INSERT INTO posts ( user_id, title, content, category, keywords, created_at, likes, dislikes) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING * ",
         [ user_id, title, content, category, JSON.stringify(keywords), new Date(),0,0],(err, result) => {
        
-        if(err){res.json({ msg: "Error encountered", error: err}); return;}
+        if(err){res.json({ done:false, msg: "Error encountered", error: err}); return;}
 
-        res.status(200).json({ 
+        res.status(200).json({ done:true, 
             msg: "New post have been created", 
             details: result.rows[0] 
         });
@@ -22,9 +22,9 @@ const updatePost= (req,res) => {
     pool.query('UPDATE posts SET title = $1 , content = $2 , category = $3 , keywords =$4 WHERE post_id=$5', 
     [title, content, category, keywords, id], (err,result) =>{
         
-        if(err){res.json({ msg: "Error encountered", error: err}); return;}
+        if(err){res.json({ done:false, msg: "Error encountered", error: err}); return;}
 
-        res.json({
+        res.json({ done:true,
             msg: `Post id = ${id} have been updated🎉`
         })
     })
@@ -77,8 +77,8 @@ const showPosts = (req,res) => {
 
     pool.query(query, queryParams, (err,result) =>{
 
-        if(err){res.json({ msg: "Error encountered", error: err}); return;}
-        res.json({
+        if(err){res.json({ done:false, msg: "Error encountered", error: err}); return;}
+        res.json({ done:true,
             posts : result.rows
         })
     })
@@ -90,8 +90,8 @@ const postsById = (req,res) => {
 
     pool.query('SELECT * FROM posts WHERE post_id=$1',[id], (err,result) =>{
         
-        if(err){res.json({ msg: "Error encountered", error: err}); return;}
-        res.json({
+        if(err){res.json({ done:false, msg: "Error encountered", error: err}); return;}
+        res.json({ done:true,
             post : result.rows[0]
         })
     })
@@ -103,9 +103,9 @@ const like = (req,res) => {
 
     pool.query('UPDATE posts SET likes = likes + 1 WHERE post_id=$1', [id], (err,result) =>{
         
-        if(err){res.json({ msg: "Error encountered", error: err}); return;}
+        if(err){res.json({ done:false, msg: "Error encountered", error: err}); return;}
 
-        res.json({
+        res.json({ done:true,
             msg: "👍 Done"
         })
     })
@@ -117,9 +117,9 @@ const dislike = (req,res) => {
 
     pool.query('UPDATE posts SET dislikes = dislikes + 1 WHERE post_id=$1', [id], (err,result) =>{
         
-        if(err){res.json({ msg: "Error encountered", error: err}); return;}
+        if(err){res.json({ done:false, msg: "Error encountered", error: err}); return;}
 
-        res.json({
+        res.json({ done:true,
             msg: "👎 Done"
         })
     })
@@ -129,9 +129,9 @@ const deletePost = (req,res) => {
     const id = parseInt(req.params.id)
 
     pool.query('DELETE FROM posts WHERE post_id=$1',[id], (err,result) => {
-        if(err){res.json({ msg: "Error encountered", error: err}); return;}
+        if(err){res.json({ done:false, msg: "Error encountered", error: err}); return;}
 
-        res.json({
+        res.json({ done:true,
             msg: `Post with post_id = ${id} has deleted successfully`
         })
     })
