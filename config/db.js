@@ -11,7 +11,7 @@ dotenv.config();
 //   port: 5432
 // });
 
-var pool = new pg.Client("postgres://aabdqjjm:yu3I155W9E2mXS5EP9kPOddcD0eoGPT2@tiny.db.elephantsql.com/aabdqjjm");
+var pool = new pg.Client(process.env.POSTSQLREMOTE);
 
 pool.connect((err) => {
   if (err) {
