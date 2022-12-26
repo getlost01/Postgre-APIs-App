@@ -31,7 +31,51 @@ const updatePost= (req,res) => {
 }
 
 const showPosts = (req,res) => {
-    pool.query('SELECT * FROM posts', (err,result) =>{
+
+    const {keyword, textSearch, category, userId, orderBy} = req.body;
+      let query = 'SELECT * FROM posts';
+      let queryPart = [];
+      let queryParams = [];
+
+      if (keyword) {
+        queryPart.push('keywords ILIKE $1');
+        queryParams.push(`%${keyword}%`);
+      }
+      if (textSearch) {
+        queryPart.push('title ILIKE $' + (queryParams.length + 1));
+        queryParams.push(`%${textSearch}%`);
+      }
+      if (category) {
+        queryPart.push('category = $' + (queryParams.length + 1));
+        queryParams.push(category);
+      }
+      if (userId) {
+        queryPart.push('user_id = $' + (queryParams.length + 1));
+        queryParams.push(userId);
+      }
+  
+      if (queryPart.length > 0) {
+        query += ' WHERE ' + queryPart.join(' AND ');
+      }
+
+      if (orderBy) {
+        query += ' ORDER BY';
+        switch (orderBy) {
+          case 'mostLiked':
+            query += ' likes DESC';
+            break;
+          case 'mostDisliked':
+            query += ' dislikes DESC';
+            break;
+          case 'mostRecent':
+                query += ' created_at DESC';
+                break;
+          default:
+            throw new Error('Invalid orderBy parameter');
+        }
+      }
+
+    pool.query(query, queryParams, (err,result) =>{
 
         if(err){res.json({ msg: "Error encountered", error: err}); return;}
         res.json({
